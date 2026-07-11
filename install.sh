@@ -149,7 +149,7 @@ if command -v "$BINARY_NAME" &> /dev/null; then
     
     if [ -n "$SHELL_RC" ]; then
         echo -e "\nPor favor, recarga tu terminal actual para aplicar la variable de entorno:"
-        echo -e "  ${BLUE}source $(basename "$SHELL_RC")${NC}"
+        echo -e "  ${BLUE}source $SHELL_RC${NC}"
     fi
 else
     echo -e "\n${RED}Error: El binario fue copiado pero no se pudo encontrar en el PATH.${NC}"

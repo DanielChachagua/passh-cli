@@ -29,7 +29,7 @@ func NewHttpApiScanner(baseURL string) *HttpApiScanner {
 
 // Register registers a new user in the system (requires Admin JWT token).
 func (h *HttpApiScanner) Register(token string, email string) error {
-	url := fmt.Sprintf("%s/api/auth/register", h.baseURL)
+	url := fmt.Sprintf("%s/passh/auth/register", h.baseURL)
 	reqBody, err := json.Marshal(map[string]string{
 		"email": email,
 	})
@@ -73,7 +73,7 @@ func (h *HttpApiScanner) Register(token string, email string) error {
 
 // Login requests a JWT token from the API using email and password.
 func (h *HttpApiScanner) Login(email, password string) (string, error) {
-	url := fmt.Sprintf("%s/api/auth/login", h.baseURL)
+	url := fmt.Sprintf("%s/passh/auth/login", h.baseURL)
 	reqBody, err := json.Marshal(map[string]string{
 		"email":    email,
 		"password": password,
@@ -125,7 +125,7 @@ func (h *HttpApiScanner) Login(email, password string) (string, error) {
 
 // ResetPasswordRequest triggers password reset token dispatch.
 func (h *HttpApiScanner) ResetPasswordRequest(email string) error {
-	url := fmt.Sprintf("%s/api/auth/reset-password/request", h.baseURL)
+	url := fmt.Sprintf("%s/passh/auth/reset-password/request", h.baseURL)
 	reqBody, err := json.Marshal(map[string]string{
 		"email": email,
 	})
@@ -164,7 +164,7 @@ func (h *HttpApiScanner) ResetPasswordRequest(email string) error {
 
 // ConfirmPasswordReset commits password updates using token.
 func (h *HttpApiScanner) ConfirmPasswordReset(token, newPassword, confirmPassword string) error {
-	url := fmt.Sprintf("%s/api/auth/reset-password/confirm", h.baseURL)
+	url := fmt.Sprintf("%s/passh/auth/reset-password/confirm", h.baseURL)
 	reqBody, err := json.Marshal(map[string]string{
 		"token":            token,
 		"new_password":     newPassword,
@@ -205,7 +205,7 @@ func (h *HttpApiScanner) ConfirmPasswordReset(token, newPassword, confirmPasswor
 
 // GetConnections lists all connections for the authenticated user.
 func (h *HttpApiScanner) GetConnections(token string) ([]domain.Connection, error) {
-	url := fmt.Sprintf("%s/api/connections", h.baseURL)
+	url := fmt.Sprintf("%s/passh/connections", h.baseURL)
 	req, err := http.NewRequest("GET", url, nil)
 	if err != nil {
 		return nil, err
@@ -241,7 +241,7 @@ func (h *HttpApiScanner) GetConnections(token string) ([]domain.Connection, erro
 
 // GetConnectionDetail fetches specific connection details including the decrypted password.
 func (h *HttpApiScanner) GetConnectionDetail(token string, id uint) (domain.ConnectionDetail, error) {
-	url := fmt.Sprintf("%s/api/connections/%d", h.baseURL, id)
+	url := fmt.Sprintf("%s/passh/connections/%d", h.baseURL, id)
 	req, err := http.NewRequest("GET", url, nil)
 	if err != nil {
 		return domain.ConnectionDetail{}, err
@@ -277,7 +277,7 @@ func (h *HttpApiScanner) GetConnectionDetail(token string, id uint) (domain.Conn
 
 // CreateConnection registers a new remote server connection in the backend API.
 func (h *HttpApiScanner) CreateConnection(token string, name, ip string, port int, username, password, details string) error {
-	url := fmt.Sprintf("%s/api/connections", h.baseURL)
+	url := fmt.Sprintf("%s/passh/connections", h.baseURL)
 	reqBody, err := json.Marshal(map[string]interface{}{
 		"name":     name,
 		"ip":       ip,
@@ -326,7 +326,7 @@ func (h *HttpApiScanner) CreateConnection(token string, name, ip string, port in
 
 // UpdateConnection updates an existing connection in the backend API.
 func (h *HttpApiScanner) UpdateConnection(token string, id uint, name, ip string, port int, username, password, details string) error {
-	url := fmt.Sprintf("%s/api/connections/%d", h.baseURL, id)
+	url := fmt.Sprintf("%s/passh/connections/%d", h.baseURL, id)
 	reqBody, err := json.Marshal(map[string]interface{}{
 		"name":     name,
 		"ip":       ip,
@@ -375,7 +375,7 @@ func (h *HttpApiScanner) UpdateConnection(token string, id uint, name, ip string
 
 // DeleteConnection deletes a connection from the backend API.
 func (h *HttpApiScanner) DeleteConnection(token string, id uint) error {
-	url := fmt.Sprintf("%s/api/connections/%d", h.baseURL, id)
+	url := fmt.Sprintf("%s/passh/connections/%d", h.baseURL, id)
 	req, err := http.NewRequest("DELETE", url, nil)
 	if err != nil {
 		return err
@@ -411,7 +411,7 @@ func (h *HttpApiScanner) DeleteConnection(token string, id uint) error {
 
 // GetPasswords retrieves all password entries from backend API.
 func (h *HttpApiScanner) GetPasswords(token string) ([]domain.Password, error) {
-	url := fmt.Sprintf("%s/api/passwords", h.baseURL)
+	url := fmt.Sprintf("%s/passh/passwords", h.baseURL)
 	req, err := http.NewRequest("GET", url, nil)
 	if err != nil {
 		return nil, err
@@ -447,7 +447,7 @@ func (h *HttpApiScanner) GetPasswords(token string) ([]domain.Password, error) {
 
 // GetPasswordDetail retrieves the detailed password entry including decrypted value.
 func (h *HttpApiScanner) GetPasswordDetail(token string, id uint) (domain.PasswordDetail, error) {
-	url := fmt.Sprintf("%s/api/passwords/%d", h.baseURL, id)
+	url := fmt.Sprintf("%s/passh/passwords/%d", h.baseURL, id)
 	req, err := http.NewRequest("GET", url, nil)
 	if err != nil {
 		return domain.PasswordDetail{}, err
@@ -483,7 +483,7 @@ func (h *HttpApiScanner) GetPasswordDetail(token string, id uint) (domain.Passwo
 
 // CreatePassword registers a new password configuration in backend.
 func (h *HttpApiScanner) CreatePassword(token string, name, user, password string) error {
-	url := fmt.Sprintf("%s/api/passwords", h.baseURL)
+	url := fmt.Sprintf("%s/passh/passwords", h.baseURL)
 	reqBody, err := json.Marshal(map[string]string{
 		"name":     name,
 		"user":     user,
@@ -529,7 +529,7 @@ func (h *HttpApiScanner) CreatePassword(token string, name, user, password strin
 
 // UpdatePassword updates fields of a password entry in backend.
 func (h *HttpApiScanner) UpdatePassword(token string, id uint, name, user, password string) error {
-	url := fmt.Sprintf("%s/api/passwords/%d", h.baseURL, id)
+	url := fmt.Sprintf("%s/passh/passwords/%d", h.baseURL, id)
 	reqBody, err := json.Marshal(map[string]string{
 		"name":     name,
 		"user":     user,
@@ -575,7 +575,7 @@ func (h *HttpApiScanner) UpdatePassword(token string, id uint, name, user, passw
 
 // DeletePassword deletes a password entry from backend.
 func (h *HttpApiScanner) DeletePassword(token string, id uint) error {
-	url := fmt.Sprintf("%s/api/passwords/%d", h.baseURL, id)
+	url := fmt.Sprintf("%s/passh/passwords/%d", h.baseURL, id)
 	req, err := http.NewRequest("DELETE", url, nil)
 	if err != nil {
 		return err
@@ -613,7 +613,7 @@ func (h *HttpApiScanner) DeletePassword(token string, id uint) error {
 
 // CreateGroup sends a group creation request to the API.
 func (h *HttpApiScanner) CreateGroup(token string, name string) (domain.Group, error) {
-	url := fmt.Sprintf("%s/api/groups", h.baseURL)
+	url := fmt.Sprintf("%s/passh/groups", h.baseURL)
 	reqBody, err := json.Marshal(map[string]string{
 		"name": name,
 	})
@@ -657,7 +657,7 @@ func (h *HttpApiScanner) CreateGroup(token string, name string) (domain.Group, e
 
 // GetGroups lists all groups the authenticated user belongs to.
 func (h *HttpApiScanner) GetGroups(token string) ([]domain.Group, error) {
-	url := fmt.Sprintf("%s/api/groups", h.baseURL)
+	url := fmt.Sprintf("%s/passh/groups", h.baseURL)
 	req, err := http.NewRequest("GET", url, nil)
 	if err != nil {
 		return nil, err
@@ -693,7 +693,7 @@ func (h *HttpApiScanner) GetGroups(token string) ([]domain.Group, error) {
 
 // GetGroupDetail retrieves group details, members list, and shared assets.
 func (h *HttpApiScanner) GetGroupDetail(token string, id uint) (domain.GroupDetailResponse, error) {
-	url := fmt.Sprintf("%s/api/groups/%d", h.baseURL, id)
+	url := fmt.Sprintf("%s/passh/groups/%d", h.baseURL, id)
 	req, err := http.NewRequest("GET", url, nil)
 	if err != nil {
 		return domain.GroupDetailResponse{}, err
@@ -729,7 +729,7 @@ func (h *HttpApiScanner) GetGroupDetail(token string, id uint) (domain.GroupDeta
 
 // AddGroupMember registers a new member using their email.
 func (h *HttpApiScanner) AddGroupMember(token string, groupID uint, email string) error {
-	url := fmt.Sprintf("%s/api/groups/%d/members", h.baseURL, groupID)
+	url := fmt.Sprintf("%s/passh/groups/%d/members", h.baseURL, groupID)
 	reqBody, err := json.Marshal(map[string]string{
 		"email": email,
 	})
@@ -773,7 +773,7 @@ func (h *HttpApiScanner) AddGroupMember(token string, groupID uint, email string
 
 // RemoveGroupMember removes a user membership from the group.
 func (h *HttpApiScanner) RemoveGroupMember(token string, groupID uint, userID uint) error {
-	url := fmt.Sprintf("%s/api/groups/%d/members/%d", h.baseURL, groupID, userID)
+	url := fmt.Sprintf("%s/passh/groups/%d/members/%d", h.baseURL, groupID, userID)
 	req, err := http.NewRequest("DELETE", url, nil)
 	if err != nil {
 		return err
@@ -809,7 +809,7 @@ func (h *HttpApiScanner) RemoveGroupMember(token string, groupID uint, userID ui
 
 // ShareConnection shares an SSH connection with a group.
 func (h *HttpApiScanner) ShareConnection(token string, groupID uint, connectionID uint) error {
-	url := fmt.Sprintf("%s/api/groups/%d/connections", h.baseURL, groupID)
+	url := fmt.Sprintf("%s/passh/groups/%d/connections", h.baseURL, groupID)
 	reqBody, err := json.Marshal(map[string]uint{
 		"ssh_connection_id": connectionID,
 	})
@@ -853,7 +853,7 @@ func (h *HttpApiScanner) ShareConnection(token string, groupID uint, connectionI
 
 // UnshareConnection stops sharing an SSH connection with a group.
 func (h *HttpApiScanner) UnshareConnection(token string, groupID uint, connectionID uint) error {
-	url := fmt.Sprintf("%s/api/groups/%d/connections/%d", h.baseURL, groupID, connectionID)
+	url := fmt.Sprintf("%s/passh/groups/%d/connections/%d", h.baseURL, groupID, connectionID)
 	req, err := http.NewRequest("DELETE", url, nil)
 	if err != nil {
 		return err
@@ -889,7 +889,7 @@ func (h *HttpApiScanner) UnshareConnection(token string, groupID uint, connectio
 
 // SharePassword shares a password credential with a group.
 func (h *HttpApiScanner) SharePassword(token string, groupID uint, passwordID uint) error {
-	url := fmt.Sprintf("%s/api/groups/%d/passwords", h.baseURL, groupID)
+	url := fmt.Sprintf("%s/passh/groups/%d/passwords", h.baseURL, groupID)
 	reqBody, err := json.Marshal(map[string]uint{
 		"password_id": passwordID,
 	})
@@ -933,7 +933,7 @@ func (h *HttpApiScanner) SharePassword(token string, groupID uint, passwordID ui
 
 // UnsharePassword stops sharing a password credential with a group.
 func (h *HttpApiScanner) UnsharePassword(token string, groupID uint, passwordID uint) error {
-	url := fmt.Sprintf("%s/api/groups/%d/passwords/%d", h.baseURL, groupID, passwordID)
+	url := fmt.Sprintf("%s/passh/groups/%d/passwords/%d", h.baseURL, groupID, passwordID)
 	req, err := http.NewRequest("DELETE", url, nil)
 	if err != nil {
 		return err
@@ -969,7 +969,7 @@ func (h *HttpApiScanner) UnsharePassword(token string, groupID uint, passwordID 
 
 // DeleteGroup deletes a group configuration in backend.
 func (h *HttpApiScanner) DeleteGroup(token string, groupID uint) error {
-	url := fmt.Sprintf("%s/api/groups/%d", h.baseURL, groupID)
+	url := fmt.Sprintf("%s/passh/groups/%d", h.baseURL, groupID)
 	req, err := http.NewRequest("DELETE", url, nil)
 	if err != nil {
 		return err

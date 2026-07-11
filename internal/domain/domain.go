@@ -67,7 +67,7 @@ type GroupMember struct {
 	Role  string `json:"role"`
 }
 
-// GroupDetailResponse holds the payload returned by GET /api/groups/:id.
+// GroupDetailResponse holds the payload returned by GET /passh/groups/:id.
 type GroupDetailResponse struct {
 	Group       Group        `json:"group"`
 	Members     []GroupMember `json:"members"`

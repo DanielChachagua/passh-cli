@@ -11,7 +11,7 @@ BLUE='\033[0;34m'
 NC='\033[0m' # Sin color
 
 # Configuración del repositorio
-GITHUB_REPO="DanielChachagua/passh"
+GITHUB_REPO="DanielChachagua/passh-cli"
 BINARY_NAME="passh"
 DEST_DIR="/usr/bin"
 

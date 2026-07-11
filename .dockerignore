@@ -1,0 +1,21 @@
+# Ignore VCS
+.git
+.gitignore
+
+# Ignore local binaries
+passh
+savessh
+ssh-manager
+
+# Ignore IDE files
+.vscode
+.idea
+
+# Ignore environments
+.env
+.env.*
+
+# Ignore logs & test outputs
+*.log
+*.out
+*.test

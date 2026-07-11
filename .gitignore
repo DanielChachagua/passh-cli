@@ -1,0 +1,37 @@
+# Binaries
+passh
+savessh
+ssh-manager
+*.exe
+*.exe~
+*.dll
+*.so
+*.dylib
+
+# Test binaries
+*.test
+
+# Output files
+*.out
+*.log
+
+# Dependencies
+vendor/
+
+# Environment files
+.env
+.env.*
+!.env.example
+
+# IDE configurations
+.idea/
+.vscode/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+
+# OS files
+.DS_Store
+Thumbs.db
